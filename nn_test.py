@@ -55,8 +55,8 @@ def train_with_file_name(file_name, nn):
 if __name__ == '__main__':
     training_file = 'raw_tests.txt'
     test_file = 'raw_tests.txt'
-    # gen_nn = neural_network.general_nn(built=True)
-    gen_nn = neural_network.general_nn(dim=[2, 3])
+    gen_nn = neural_network.general_nn(built=True)
+    # gen_nn = neural_network.general_nn(dim=[2, 3])
     # train_with_file_name(training_file, gen_nn)
     main(gen_nn, test_file)
 
