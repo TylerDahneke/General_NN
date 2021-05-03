@@ -29,15 +29,14 @@ from custom_array import *
 #
 # END DESC.
 # GLOBALS
+# TestCase is output of dim=[2,3], learningrate=5, iterations=50,000
+TestCase = [[[-158.8673270829059, 15.075132406033047, 1300.4086274105994],
+             [72.34605511413292, 58.06848791011592, -646.0480049141382],
+             [73.25081667590938, -70.64878842253808, -648.6392405309638]]
 
-TestCase = [
-    [[1, 2],
-     [1, 2],
-     [1, 2]]
+            ]
+LearningRate = 5
 
-]
-
-LearningRate = .1
 
 # END GLOBALS
 #
@@ -98,14 +97,16 @@ class general_nn:
         if counter:
             curr_weights = self.weights[counter - 1].contents
             curr_nodes = self.nodes[counter - 1].contents[0]
+            dimen = len(curr_weights), len(curr_weights[0])
+            if dimen == (4, 5):
+                x = 1
             for curr_node_pos in range(len(curr_nodes)):
                 for next_node_pos in range(len(delta_list)):
-
                     curr_weights[curr_node_pos][next_node_pos] += - LearningRate * curr_nodes[curr_node_pos] * \
                                                                   delta_list[next_node_pos]
 
             delta_j_list = []
-            for delta_pos in range(len(delta_list)):
+            for delta_pos in range(len(delta_list) - 1):
                 node_val = curr_nodes[delta_pos]
                 delta_j = (node_val - delta_list[delta_pos]) * deriv_activation_function(node_val)
                 delta_j_list.append(delta_j)
@@ -117,10 +118,10 @@ class general_nn:
         for val in ans:
             if val > ans[max_pos]:
                 max_pos = curr_pos
-        if max_pos == 0:
-            return [1, 0]
-        elif max_pos == 1:
-            return [0, 1]
+            curr_pos += 1
+        r_list = [0] * len(ans)
+        r_list[max_pos] = 1
+        return r_list
 
     def reset_nodes(self):
         self.nodes = []
